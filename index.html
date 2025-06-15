@@ -21,8 +21,9 @@
   </select>
 
   <div id="key-select-section">
-    <label for="base-key">Select base key:</label>
-    <select id="base-key"></select>
+    <label for="base-key">Enter or select base key:</label>
+    <input list="base-key-list" id="base-key" placeholder="e.g., janicee, newgirl" />
+    <datalist id="base-key-list"></datalist>
 
     <label>Do you want to:</label>
     <button id="add-new">➕ Add New</button>
@@ -51,7 +52,8 @@
 
   <script>
     const typeSelect = document.getElementById('type');
-    const baseKeySelect = document.getElementById('base-key');
+    const baseKeyInput = document.getElementById('base-key');
+    const baseKeyList = document.getElementById('base-key-list');
     const existingKeySelect = document.getElementById('existing-key');
     const keySection = document.getElementById('key-select-section');
     const editSection = document.getElementById('edit-section');
@@ -83,7 +85,7 @@
         const res = await fetch(`${currentType}.json`);
         jsonData = await res.json();
 
-        // Group by base key
+        // Group keys by base
         allKeysByBase = {};
         Object.keys(jsonData).forEach(k => {
           const base = k.split('-')[0];
@@ -91,12 +93,12 @@
           allKeysByBase[base].push(k);
         });
 
-        baseKeySelect.innerHTML = '';
+        // Populate base key datalist
+        baseKeyList.innerHTML = '';
         Object.keys(allKeysByBase).forEach(base => {
           const opt = document.createElement('option');
           opt.value = base;
-          opt.textContent = base;
-          baseKeySelect.appendChild(opt);
+          baseKeyList.appendChild(opt);
         });
 
         keySection.style.display = 'block';
@@ -107,10 +109,9 @@
     });
 
     addNewBtn.addEventListener('click', () => {
-      const base = baseKeySelect.value;
+      const base = baseKeyInput.value.trim();
       if (!base) return;
 
-      // Find next available index
       const keys = allKeysByBase[base] || [];
       const nextIndex = keys.reduce((max, key) => {
         const num = parseInt(key.split('-')[1]) || 0;
@@ -125,8 +126,11 @@
     });
 
     editExistingBtn.addEventListener('click', () => {
-      const base = baseKeySelect.value;
-      if (!base) return;
+      const base = baseKeyInput.value.trim();
+      if (!base || !allKeysByBase[base]) {
+        alert('Base key does not exist.');
+        return;
+      }
 
       existingKeySelect.innerHTML = '';
       allKeysByBase[base].forEach(k => {
