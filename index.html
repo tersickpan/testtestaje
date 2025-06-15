@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Media JSON Editor</title>
+  <style>
+    body { font-family: Arial, sans-serif; padding: 20px; background: #f7f7f7; }
+    label, select, input, button, textarea { display: block; margin: 10px 0; width: 100%; max-width: 500px; }
+    textarea { height: 200px; }
+    #form-section, #edit-section, #key-select-section { display: none; margin-top: 20px; }
+  </style>
+</head>
+<body>
+  <h2>Smart Media JSON Editor</h2>
+
+  <label for="type">Choose media type:</label>
+  <select id="type">
+    <option value="">-- Select --</option>
+    <option value="pictures">Pictures</option>
+    <option value="videos">Videos</option>
+  </select>
+
+  <div id="key-select-section">
+    <label for="base-key">Select base key:</label>
+    <select id="base-key"></select>
+
+    <label>Do you want to:</label>
+    <button id="add-new">➕ Add New</button>
+    <button id="edit-existing">✏️ Edit Existing</button>
+  </div>
+
+  <div id="edit-section">
+    <label for="existing-key">Choose existing key to edit:</label>
+    <select id="existing-key"></select>
+  </div>
+
+  <div id="form-section">
+    <label for="url">Media URL:</label>
+    <input type="text" id="url" placeholder="https://..." />
+
+    <div id="volume-section" style="display: none;">
+      <label for="volume">Volume (optional):</label>
+      <input type="number" step="0.01" id="volume" placeholder="0.05" />
+    </div>
+
+    <button id="apply">Apply Changes</button>
+
+    <h3>Updated JSON Preview</h3>
+    <textarea id="json-output" readonly></textarea>
+  </div>
+
+  <script>
+    const typeSelect = document.getElementById('type');
+    const baseKeySelect = document.getElementById('base-key');
+    const existingKeySelect = document.getElementById('existing-key');
+    const keySection = document.getElementById('key-select-section');
+    const editSection = document.getElementById('edit-section');
+    const formSection = document.getElementById('form-section');
+    const addNewBtn = document.getElementById('add-new');
+    const editExistingBtn = document.getElementById('edit-existing');
+    const urlInput = document.getElementById('url');
+    const volumeInput = document.getElementById('volume');
+    const volumeSection = document.getElementById('volume-section');
+    const applyBtn = document.getElementById('apply');
+    const output = document.getElementById('json-output');
+
+    let currentType = '';
+    let jsonData = {};
+    let currentEditKey = '';
+    let allKeysByBase = {};
+
+    typeSelect.addEventListener('change', async () => {
+      currentType = typeSelect.value;
+      if (!currentType) return;
+
+      volumeSection.style.display = currentType === 'videos' ? 'block' : 'none';
+      keySection.style.display = 'none';
+      editSection.style.display = 'none';
+      formSection.style.display = 'none';
+      output.value = '';
+
+      try {
+        const res = await fetch(`${currentType}.json`);
+        jsonData = await res.json();
+
+        // Group by base key
+        allKeysByBase = {};
+        Object.keys(jsonData).forEach(k => {
+          const base = k.split('-')[0];
+          if (!allKeysByBase[base]) allKeysByBase[base] = [];
+          allKeysByBase[base].push(k);
+        });
+
+        baseKeySelect.innerHTML = '';
+        Object.keys(allKeysByBase).forEach(base => {
+          const opt = document.createElement('option');
+          opt.value = base;
+          opt.textContent = base;
+          baseKeySelect.appendChild(opt);
+        });
+
+        keySection.style.display = 'block';
+      } catch (err) {
+        alert('Failed to load JSON.');
+        console.error(err);
+      }
+    });
+
+    addNewBtn.addEventListener('click', () => {
+      const base = baseKeySelect.value;
+      if (!base) return;
+
+      // Find next available index
+      const keys = allKeysByBase[base] || [];
+      const nextIndex = keys.reduce((max, key) => {
+        const num = parseInt(key.split('-')[1]) || 0;
+        return Math.max(max, num);
+      }, 0) + 1;
+
+      currentEditKey = `${base}-${String(nextIndex).padStart(2, '0')}`;
+      urlInput.value = '';
+      volumeInput.value = '';
+      formSection.style.display = 'block';
+      editSection.style.display = 'none';
+    });
+
+    editExistingBtn.addEventListener('click', () => {
+      const base = baseKeySelect.value;
+      if (!base) return;
+
+      existingKeySelect.innerHTML = '';
+      allKeysByBase[base].forEach(k => {
+        const opt = document.createElement('option');
+        opt.value = k;
+        opt.textContent = k;
+        existingKeySelect.appendChild(opt);
+      });
+
+      editSection.style.display = 'block';
+      formSection.style.display = 'none';
+    });
+
+    existingKeySelect.addEventListener('change', () => {
+      const selected = existingKeySelect.value;
+      if (!selected) return;
+
+      currentEditKey = selected;
+      const entry = jsonData[selected];
+
+      if (currentType === 'pictures') {
+        urlInput.value = entry;
+      } else if (currentType === 'videos') {
+        urlInput.value = entry.url;
+        volumeInput.value = entry.volume || '';
+      }
+
+      formSection.style.display = 'block';
+    });
+
+    applyBtn.addEventListener('click', () => {
+      const url = urlInput.value.trim();
+      const volume = parseFloat(volumeInput.value.trim());
+
+      if (!currentEditKey || !url) {
+        alert('Missing key or URL.');
+        return;
+      }
+
+      if (currentType === 'pictures') {
+        jsonData[currentEditKey] = url;
+      } else {
+        jsonData[currentEditKey] = { url };
+        if (!isNaN(volume)) {
+          jsonData[currentEditKey].volume = volume;
+        }
+      }
+
+      output.value = JSON.stringify(jsonData, null, 2);
+      alert(`✅ ${currentEditKey} updated. Copy the result manually.`);
+    });
+  </script>
+</body>
+</html>
