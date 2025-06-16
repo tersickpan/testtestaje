@@ -6,17 +6,10 @@ import { renderJSON } from './ui-common.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
   await fetchJSON(currentType);
-  renderForm();
+  setupForm();
 });
 
-function renderForm() {
-  const container = document.getElementById('add-form');
-  container.innerHTML = \`
-    <label>Base Key: <input type="text" id="base-key"></label><br>
-    <label>URL: <input type="text" id="url"></label><br>
-    <label>Volume (optional): <input type="number" step="0.01" id="volume"></label><br>
-    <button id="apply-btn">Apply</button>
-  \`;
+function setupForm() {
   document.getElementById('apply-btn').onclick = () => {
     const base = document.getElementById('base-key').value.trim();
     const url = document.getElementById('url').value.trim();

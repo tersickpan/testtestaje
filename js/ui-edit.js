@@ -6,30 +6,17 @@ import { renderJSON } from './ui-common.js';
 
 window.addEventListener('DOMContentLoaded', async () => {
   await fetchJSON(currentType);
-  renderEditForm();
+  setupEditForm();
 });
 
-function renderEditForm() {
-  const container = document.getElementById('edit-form');
+function setupEditForm() {
+  const baseSelect = document.getElementById('base-key');
+  const entrySelect = document.getElementById('entry-key');
   const keys = Object.keys(jsonData[currentType]);
   const baseKeys = [...new Set(keys.map(k => k.split('-')[0]))];
 
-  container.innerHTML = \`
-    <label>Base Key:
-      <select id="base-key">
-        \${baseKeys.map(k => \`<option value="\${k}">\${k}</option>\`).join('')}
-      </select>
-    </label><br>
-    <label>Entry:
-      <select id="entry-key"></select>
-    </label><br>
-    <label>URL: <input type="text" id="url"></label><br>
-    <label>Volume (optional): <input type="number" step="0.01" id="volume"></label><br>
-    <button id="apply-btn">Apply</button>
-  \`;
+  baseSelect.innerHTML = baseKeys.map(k => \`<option value="\${k}">\${k}</option>\`).join('');
 
-  const baseSelect = document.getElementById('base-key');
-  const entrySelect = document.getElementById('entry-key');
   const updateEntryList = () => {
     const base = baseSelect.value;
     const options = keys.filter(k => k.startsWith(base + '-'));
