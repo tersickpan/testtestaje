@@ -15,12 +15,12 @@ function setupEditForm() {
   const keys = Object.keys(jsonData[currentType]);
   const baseKeys = [...new Set(keys.map(k => k.split('-')[0]))];
 
-  baseSelect.innerHTML = baseKeys.map(k => \`<option value="\${k}">\${k}</option>\`).join('');
+  baseSelect.innerHTML = baseKeys.map(k => `<option value="\${k}">\${k}</option>`).join('');
 
   const updateEntryList = () => {
     const base = baseSelect.value;
     const options = keys.filter(k => k.startsWith(base + '-'));
-    entrySelect.innerHTML = options.map(k => \`<option value="\${k}">\${k}</option>\`).join('');
+    entrySelect.innerHTML = options.map(k => `<option value="\${k}">\${k}</option>`).join('');
     populateEntryForm();
   };
 
