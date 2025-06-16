@@ -17,7 +17,7 @@ function setupForm() {
     const suffix = Object.keys(jsonData[currentType])
       .filter(k => k.startsWith(base))
       .length + 1;
-    const key = `${base}-\${String(suffix).padStart(2, '0')}`;
+    const key = `${base}-${String(suffix).padStart(2, '0')}`;
     addOrUpdateEntry(key, url, vol ? parseFloat(vol) : null);
     renderJSON(jsonData[currentType]);
   };
