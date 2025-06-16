@@ -4,14 +4,19 @@ import { addOrUpdateEntry } from './updater.js';
 import { uploadJSON } from './uploader.js';
 import { renderJSON } from './ui-common.js';
 
-window.addEventListener('DOMContentLoaded', async () => {
+const typeSelect = document.getElementById('type');
+
+// window.addEventListener('DOMContentLoaded', async () => {
+//   await fetchJSON(currentType);
+//   setupForm();
+// });
+
+typeSelect.addEventListener('change', async (data) => {
+  currentType = typeSelect.value;
+  if(!currentType) return;
   await fetchJSON(currentType);
   setupForm();
 });
-
-document.getElementById('type').addEventListener('change', async (data) => {
-  console.log(data);
-})
 
 function setupForm() {
   document.getElementById('apply-btn').onclick = () => {

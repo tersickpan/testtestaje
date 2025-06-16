@@ -4,9 +4,18 @@ import { addOrUpdateEntry } from './updater.js';
 import { uploadJSON } from './uploader.js';
 import { renderJSON } from './ui-common.js';
 
-window.addEventListener('DOMContentLoaded', async () => {
+const typeSelect = document.getElementById('type');
+
+// window.addEventListener('DOMContentLoaded', async () => {
+//   await fetchJSON(currentType);
+//   setupEditForm();
+// });
+
+typeSelect.addEventListener('change', async (data) => {
+  currentType = typeSelect.value;
+  if(!currentType) return;
   await fetchJSON(currentType);
-  setupEditForm();
+  setupForm();
 });
 
 function setupEditForm() {
