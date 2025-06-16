@@ -9,6 +9,10 @@ window.addEventListener('DOMContentLoaded', async () => {
   setupForm();
 });
 
+document.getElementById('type').addEventListener('change', async (data) => {
+  console.log(data);
+})
+
 function setupForm() {
   document.getElementById('apply-btn').onclick = () => {
     const base = document.getElementById('base-key').value.trim();
