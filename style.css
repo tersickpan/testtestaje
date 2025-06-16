@@ -1,0 +1,15 @@
+body { 
+    font-family: Arial, sans-serif; padding: 20px; background: #f7f7f7; 
+}
+
+label, select, input, button, textarea { 
+    display: block; margin: 10px 0; width: 100%; max-width: 500px; 
+}
+
+textarea { 
+    height: 200px; 
+}
+
+#form-section, #edit-section, #key-select-section { 
+    display: none; margin-top: 20px; 
+}

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Media JSON Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <h2>Smart Media JSON Editor</h2>
+
+  <label for="type">Choose media type:</label>
+  <select id="type">
+    <option value="">-- Select --</option>
+    <option value="pictures">Pictures</option>
+    <option value="videos">Videos</option>
+  </select>
+
+  <div id="key-select-section">
+    <label for="base-key">Enter or select base key:</label>
+    <input list="base-key-list" id="base-key" placeholder="e.g., janicee, newgirl" />
+    <datalist id="base-key-list"></datalist>
+
+    <label>Do you want to:</label>
+    <button id="add-new">➕ Add New</button>
+    <button id="edit-existing">✏️ Edit Existing</button>
+  </div>
+
+  <div id="edit-section">
+    <label for="existing-key">Choose existing key to edit:</label>
+    <select id="existing-key"></select>
+  </div>
+
+  <div id="form-section">
+    <label for="url">Media URL:</label>
+    <input type="text" id="url" placeholder="https://..." />
+
+    <div id="volume-section" style="display: none;">
+      <label for="volume">Volume (optional):</label>
+      <input type="number" step="0.01" id="volume" placeholder="0.05" />
+    </div>
+
+    <button id="apply">Apply Changes</button>
+
+    <h3>Updated JSON Preview</h3>
+    <textarea id="json-output" readonly></textarea>
+  </div>
+
+  <script src="main.js"></script>
+</body>
+</html>
