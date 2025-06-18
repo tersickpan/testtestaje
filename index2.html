@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Media JSON Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="loadingScreen">Loading...</div>
+  <div id="mainContent" class="container" style="display: none;">
+    <h2>Smart Media JSON Editor</h2>
+
+    <nav class="nav-bar" id="mainNavBar">
+      <button class="nav-button" data-action="add">Add New</button>
+      <button class="nav-button" data-action="edit">Edit Existing</button>
+      <button class="nav-button" data-action="last">Last Update</button>
+    </nav>
+
+    <div id="mediaContainer" style="display: none;">
+      <label for="type">Choose media type:</label>
+      <select id="type">
+        <option value="">-- Select --</option>
+        <option value="pictures">Pictures</option>
+        <option value="videos">Videos</option>
+      </select>
+    </div>
+
+    <div id="addFormContainer" style="display: none;">
+      <h3>Add New</h3>
+      <div id="new-data-form" style="display: none;">
+        <label>New Baddie:
+          <input type="text" id="new-base-key">
+        </label><br>
+      </div>
+    </div>
+    <div id="editFormContainer" style="display: none;">
+      <h3>Edit Existing</h3>
+    </div>
+    <div id="data-form" style="display: none;">
+      <label>Existing Baddie:
+        <select id="base-key"></select>
+      </label><br>
+      <div id="exist-data-form" style="display: none;">
+        <label>Them goods:
+          <select id="entry-key"></select>
+        </label><br>
+      </div>
+      <label>URL: <input type="text" id="url"></label><br>
+      <label id="volumeSection">Volume (optional): <input type="number" step="0.01" id="volume"></label><br>
+      <button id="apply-btn">Apply</button>
+      <button id="upload-btn" style="display: none;">Upload JSON</button>
+      <pre id="json-output"></pre>
+    </div>
+
+
+  </div>
+
+  <script src="state.js"></script>
+  <script src="fetchData.js"></script>
+  <script src="navbar.js"></script>
+  <script src="getMediaKeys.js"></script>
+  <script src="addUpdateData.js"></script>
+</body>
+</html>

@@ -1,15 +1,78 @@
-body { 
-    font-family: Arial, sans-serif; padding: 20px; background: #f7f7f7; 
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f4f4f4;
+  margin: 0;
+  padding: 0;
 }
 
-label, select, input, button, textarea { 
-    display: block; margin: 10px 0; width: 100%; max-width: 500px; 
+.container {
+  max-width: 600px;
+  margin: 50px auto;
+  background: #fff;
+  padding: 20px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-textarea { 
-    height: 200px; 
-}
+/* Container styling */
+.nav-bar {
+    display: flex;
+    gap: 1rem;
+    background-color: #f8f9fa;
+    padding: 1rem;
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  /* Base button styling */
+  .nav-button {
+    padding: 0.6rem 1.2rem;
+    font-size: 1rem;
+    font-weight: 500;
+    border: 2px solid transparent;
+    border-radius: 6px;
+    background-color: #ffffff;
+    color: #007bff;
+    cursor: pointer;
+    transition: background-color 0.2s, border-color 0.2s;
+  }
+  
+  .nav-button:hover:not(:disabled) {
+    background-color: #e9f5ff;
+    border-color: #007bff;
+  }
+  
+  /* Active state styling */
+  .nav-button--active {
+    background-color: #dbeafe;
+    color: #6b7280;
+    border-color: #93c5fd;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
 
-#form-section, #edit-section, #key-select-section { 
-    display: none; margin-top: 20px; 
-}
+  #loadingScreen {
+    position: fixed;
+    inset: 0;
+    background-color: #f9fafb;
+    color: #333;
+    font-size: 1.5rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+  }
+
+  input, select, button {
+    display: block;
+    margin: 10px 0;
+    padding: 10px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+  
+  pre {
+    background: #eee;
+    padding: 10px;
+    max-height: 300px;
+    overflow: auto;
+  }
+  
