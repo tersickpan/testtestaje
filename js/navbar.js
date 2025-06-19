@@ -4,6 +4,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const mediaBar = document.getElementById("mediaContainer");
   const addForm = document.getElementById("addFormContainer");
   const editForm = document.getElementById("editFormContainer");
+  const lastUpdateCont = document.getElementById("lastUpdateContainer");
   const existDataForm = document.getElementById("exist-data-form");
 
   newBaseKey.addEventListener("change", () => {
@@ -47,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
           addForm.style.display = "block";
           editForm.style.display = "none";
           existDataForm.style.display = "none";
+          lastUpdateCont.style.display = "none";
           break;
 
         case "edit":
@@ -62,18 +64,21 @@ document.addEventListener("DOMContentLoaded", () => {
           addForm.style.display = "none";
           editForm.style.display = "block";
           existDataForm.style.display = "block";
+          lastUpdateCont.style.display = "none";
           break;
 
         case "last":
           typeSelect.value = "";
           currentType = "";
           checkDisplayForm();
+          getLatestMedia();
 
           mediaBar.style.display = "none";
           addForm.style.display = "none";
           editForm.style.display = "none";
           existDataForm.style.display = "none";
           dataForm.style.display = "none";
+          lastUpdateCont.style.display = "block";
           break;
       }
     });

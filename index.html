@@ -52,13 +52,27 @@
       <pre id="json-output"></pre>
     </div>
 
+    <div id="lastUpdateContainer" style="display: none;">
+      <div id="lastUpdatedMediaContainer">
+        <h3>Latest Image</h3>
+        <h4 id="latestPicName"></h4>
+        <img id="lastUpdatedImage" alt="Last Updated Image">
+        <h3>Latest Video</h3>
+        <h4 id="latestVidName"></h4>
+        <video id="lastUpdatedVideo" crossorigin="anonymous" controls muted autoplay loop>
+      </div>
+    </div>
+
 
   </div>
 
   <script src="./js/state.js"></script>
   <script src="./js/fetchData.js"></script>
+  <script src="./js/sortJSON.js"></script>
   <script src="./js/navbar.js"></script>
   <script src="./js/getMediaKeys.js"></script>
   <script src="./js/addUpdateData.js"></script>
+  <script src="./js/lastUpdated.js"></script>
+
 </body>
 </html>
