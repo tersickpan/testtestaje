@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Smart Media JSON Editor</title>
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div id="loadingScreen">Loading...</div>
+  <div id="mainContent" class="container" style="display: none;">
+    <h2>Smart Media JSON Editor</h2>
+
+    <div id="mediaContainer">
+      <label for="type">Choose media type:
+      <select id="type">
+        <option value="">-- Select --</option>
+        <option value="pictures">Pictures</option>
+        <option value="videos">Videos</option>
+      </select>
+      </label><br>
+    </div>
+
+    <div id="data-form">
+      <label>Existing Baddie:
+        <select id="base-key"></select>
+      </label><br>
+      <div id="exist-data-form">
+        <label>Them goods:
+          <select id="entry-key"></select>
+        </label><br>
+      </div>
+    </div>
+
+    <div id="nav-buttons">
+      <button id="prev-btn" class="nav-button">⟵ Previous</button>
+      <button id="next-btn" class="nav-button">Next ⟶</button>
+    </div>
+
+
+    <div id="image-preview" style="display: none;">
+      <h3 style="color:#ff69b4; text-align:center;">Preview Image</h3>
+      <img id="picPreview" alt="Image Preview">
+    </div>
+    <div id="video-preview" style="display: none;">
+      <h3 style="color:#ff69b4; text-align:center;">Preview Video</h3>
+      <video id="vidPreview" crossorigin="anonymous" controls muted>
+    </div>
+  </div>
+
+  <script src="./js/fetchData.js"></script>
+  <script src="./js/viewing.js"></script>
+</body>
+</html>
