@@ -12,7 +12,7 @@ applyButton.addEventListener("click", () => {
     return;
   }
 
-  // Tambah base key(orang) baru
+  // Add new base key
   if (currentPage === "add" && newBaseKey.value) {
     currentBase = newBaseKey.value.trim();
   } else {
