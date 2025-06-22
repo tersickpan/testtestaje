@@ -7,6 +7,7 @@ const picPreview = document.getElementById("picPreview");
 const vidPreview = document.getElementById("vidPreview");
 const prevBtn = document.getElementById("prev-btn");
 const nextBtn = document.getElementById("next-btn");
+const sortModeSelect = document.getElementById("sort-mode");
 
 let dataFetched = false;
 let jsonData = { pictures: {}, videos: {} };
@@ -16,17 +17,20 @@ typeSelect.addEventListener("change", () => {
   currentType = typeSelect.value;
 
   if (!currentType) {
+    sortModeSelect.disabled = true;
     baseSelect.innerHTML = "";
     entrySelect.innerHTML = "";
     hidePreviews();
     return;
   }
 
+  sortModeSelect.disabled = false;
   populateBaseKey();
 });
 
 baseSelect.addEventListener("change", populateEntryList);
 entrySelect.addEventListener("change", setPreview);
+sortModeSelect.addEventListener("change", populateEntryList);
 
 prevBtn.addEventListener("click", () => {
   const currentIndex = entrySelect.selectedIndex;
@@ -89,9 +93,29 @@ function populateBaseKey() {
 }
 
 function populateEntryList() {
-  const base = baseSelect.value;
+  const sortMode = sortModeSelect.value;
   const keys = Object.keys(jsonData[currentType]);
-  const filtered = keys.filter((k) => k.startsWith(`${base}-`));
+
+  let filtered = [];
+
+  if (sortMode === "default") {
+    // Default: filter by base prefix
+    const base = baseSelect.value;
+    filtered = keys.filter((k) => k.startsWith(`${base}-`)).sort();
+
+    baseSelect.disabled = false;
+  } else {
+    // Global sorting
+    filtered = [...keys];
+
+    filtered.sort((a, b) => {
+      const aTime = jsonData[currentType][a]?.timestamp || 0;
+      const bTime = jsonData[currentType][b]?.timestamp || 0;
+      return sortMode === "newest" ? bTime - aTime : aTime - bTime;
+    });
+
+    baseSelect.disabled = true; // disable base when globally sorted
+  }
 
   entrySelect.innerHTML = filtered
     .map((k) => `<option value="${k}">${k}</option>`)
