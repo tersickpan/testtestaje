@@ -107,10 +107,14 @@ function populateEntryList() {
   } else {
     // Global sorting
     filtered = [...keys];
+    let aTime = 0;
+    let bTime = 0;
 
     filtered.sort((a, b) => {
-      const aTime = jsonData[currentType][a]?.timestamp || 0;
-      const bTime = jsonData[currentType][b]?.timestamp || 0;
+      if (currentType) {
+        if (a) aTime = new Date(jsonData[currentType][a].timestamp);
+        if (b) bTime = new Date(jsonData[currentType][b].timestamp);
+      }
       return sortMode === "newest" ? bTime - aTime : aTime - bTime;
     });
 
