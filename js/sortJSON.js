@@ -8,7 +8,6 @@ function sortByTimestamp(jsonData, order = "asc") {
     const t2 = new Date(b[1].timestamp);
     return order === "asc" ? t1 - t2 : t2 - t1;
   });
-  console.log(entries);
 
   // Step 3: Convert back to object
   const sortedObject = Object.fromEntries(entries);

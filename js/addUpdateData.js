@@ -30,10 +30,10 @@ applyButton.addEventListener("click", () => {
     key = entrySelect.value;
   }
 
-  if (currentType === "pictures") {
-    jsonData.pictures[key] = { url };
-  } else if (currentType === "videos") {
-    jsonData.videos[key] = volume !== null ? { url, volume } : { url };
+  jsonData[currentType][key].url = url;
+
+  if (currentType === "videos") {
+    jsonData[currentType][key].volume = volume !== null ? volume : null;
   }
 
   if (currentPage === "add") {
