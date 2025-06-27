@@ -31,6 +31,7 @@ function checkDisplayForm() {
   newDataForm.style.display = "block";
   dataForm.style.display = "block";
   volumeSection.style.display = currentType === "videos" ? "block" : "none";
+  deleteButton.style.display = currentPage === "edit" ? "block" : "none";
 }
 
 // Group keys by base

@@ -181,3 +181,18 @@ h2, h3, h4 {
   padding: 0.6rem 1.2rem;
   border-radius: 8px;
 }
+
+.danger-button {
+  background-color: #8b0000;
+  color: #fff;
+  border: none;
+  padding: 0.6rem 1.2rem;
+  border-radius: 8px;
+  margin-top: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.danger-button:hover {
+  background-color: #ff0033;
+}
