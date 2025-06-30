@@ -1,10 +1,10 @@
 window.addEventListener("DOMContentLoaded", async () => {
-  const loadingScreen = document.getElementById("loadingScreen");
-  const mainContent = document.getElementById("mainContent");
-
   if (dataFetched) return;
 
   try {
+    // Start loading
+    startLoadSpinner();
+
     const resPic = await fetch(
       `https://raw.githubusercontent.com/tersickpan/testtestaje/refs/heads/main/json/pictures.json`
     );
@@ -16,12 +16,10 @@ window.addEventListener("DOMContentLoaded", async () => {
     jsonData.videos = await resVid.json();
 
     dataFetched = true;
-
-    // Hide loading, show content
-    loadingScreen.style.display = "none";
-    mainContent.style.display = "block";
-  } catch (error) {
-    loadingScreen.textContent = "Failed to load data.";
-    console.error("Fetch error:", error);
+  } catch (err) {
+    console.error("GitHub Fetch Error:", err);
+    alert("❌ Failed to fetch JSON from GitHub. Check console for details.");
+  } finally {
+    stopLoadSpinner();
   }
 });
