@@ -137,14 +137,22 @@ function setPreview() {
     return;
   }
 
+  startLoadSpinner();
+
   if (currentType === "pictures") {
-    picPreview.src = entry.url;
     picContainer.style.display = "block";
     vidContainer.style.display = "none";
+
+    picPreview.onload = stopLoadSpinner;
+    picPreview.onerror = stopLoadSpinner;
+    picPreview.src = entry.url;
   } else if (currentType === "videos") {
-    vidPreview.src = entry.url;
-    vidPreview.volume = typeof entry.volume === "number" ? entry.volume : 0.07;
-    vidContainer.style.display = "block";
     picContainer.style.display = "none";
+    vidContainer.style.display = "block";
+
+    vidPreview.onloadeddata = stopLoadSpinner;
+    vidPreview.onerror = stopLoadSpinner;
+    vidPreview.volume = typeof entry.volume === "number" ? entry.volume : 0.07;
+    vidPreview.src = entry.url;
   }
 }

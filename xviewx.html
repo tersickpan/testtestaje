@@ -6,8 +6,13 @@
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="loadingScreen">Loading...</div>
-  <div id="mainContent" class="container" style="display: none;">
+  <div id="uploadSpinner" style="display: none;">
+    <div class="emoji-spinner">
+      <div class="spinner"></div>
+      <div class="emoji-face" id="spinnerEmoji">💅</div>
+    </div>    
+  </div>
+  <div id="mainContent" class="container">
     <h2>Smart Media JSON Editor</h2>
 
     <div id="mediaContainer">
@@ -56,6 +61,7 @@
     </div>
   </div>
 
+  <script src="./js/loadingSpinner.js"></script>
   <script src="./js/fetchData.js"></script>
   <script src="./js/viewing.js"></script>
 </body>
